@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Reginshirm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #ff5733;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffbd69;
+            padding: 10px 20px;
+        }
+        nav a {
+            color: #333;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .login-form h2 {
+            text-align: center;
+            color: #ff5733;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff5733;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-form button:hover {
+            background-color: #c7421a;
+        }
+        .message {
+            text-align: center;
+            color: red;
+        }
+        footer {
+            background-color: #ff5733;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Reginshirm</h1>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="register.html">Register</a>
+</nav>
+
+<div class="container">
+    <div class="login-form">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p class="message" id="login-message"></p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Reginshirm</p>
+</footer>
+
+<script>
+    function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const messageElement = document.getElementById('login-message');
+        
+        if (username === '' || password === '') {
+            messageElement.textContent = 'Please enter both username and password.';
+            return;
+        }
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(user => user.username === username && user.password === password);
+        
+        if (user) {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', username);
+            messageElement.style.color = 'green';
+            messageElement.textContent = 'Login successful.';
+            setTimeout(() => window.location.href = 'index.html', 2000);
+        } else {
+            messageElement.textContent = 'Invalid credentials.';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (isLoggedIn) {
+            window.location.href = 'index.html';
+        }
+    });
+</script>
+
+</body>
+</html>

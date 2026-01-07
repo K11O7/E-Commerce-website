@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Reginshirm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #ff5733;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffbd69;
+            padding: 10px 20px;
+        }
+        nav a {
+            color: #333;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+        }
+        .register-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .register-form h2 {
+            text-align: center;
+            color: #ff5733;
+        }
+        .register-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .register-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff5733;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .register-form button:hover {
+            background-color: #c7421a;
+        }
+        .message {
+            text-align: center;
+            color: red;
+        }
+        footer {
+            background-color: #ff5733;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Reginshirm</h1>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Login</a>
+</nav>
+
+<div class="container">
+    <div class="register-form">
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Username">
+        <input type="password" id="register-password" placeholder="Password">
+        <button onclick="register()">Register</button>
+        <p class="message" id="register-message"></p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Reginshirm</p>
+</footer>
+
+<script>
+    function register() {
+        const username = document.getElementById('register-username').value.trim();
+        const password = document.getElementById('register-password').value.trim();
+        const messageElement = document.getElementById('register-message');
+
+        if (username === '' || password === '') {
+            messageElement.textContent = 'Please enter both username and password.';
+            return;
+        }
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        
+        const userExists = users.some(user => user.username === username);
+
+        if (userExists) {
+            messageElement.textContent = 'Username already taken.';
+        } else {
+            users.push({ username, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            messageElement.style.color = 'green';
+            messageElement.textContent = 'Registration successful.';
+            setTimeout(() => window.location.href = 'login.html', 2000);
+        }
+    }
+</script>
+
+</body>
+</html>
